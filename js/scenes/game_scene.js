@@ -16,7 +16,7 @@ class GameScene extends BaseScene {
 
     this.Config = {
       Building: {
-        Width: [30, 70],
+        Width: [25, 60],
         Height: Math.round(window.innerHeight / 3),
         Max_Gap: window.innerWidth - 70
       },
@@ -52,7 +52,10 @@ class GameScene extends BaseScene {
     var config = this.Config;
 
     this.score_text = this.add.text(bbox.center_x, 20, 'Score: 0', { color: '#00ff00' });
-    this.score_text.setOrigin(0.5);
+    this.score_text.setOrigin(0.5, 0);
+
+    this.instruction_text = this.add.text(bbox.center_x, bbox.center_y, 'TAP AND HOLD', { color: '#CCC' });
+    this.instruction_text.setOrigin(0.5, 0);
 
     // START BUILDING
     var building_h = config.Building.Height;
@@ -137,6 +140,10 @@ class GameScene extends BaseScene {
 
   onPointerDown() {
     this.pole.grow();
+    if (this.instruction_text) {
+      this.instruction_text.destroy();
+      this.instruction_text = null;
+    }
   }
 
   onPointerUp() {

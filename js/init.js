@@ -6,10 +6,6 @@ function initGame() {
     height: window.innerHeight, //480,
     parent: 'phaser-container',
     backgroundColor: '#111111',
-    physics: {
-      // default: 'arcade',
-      // arcade: { debug: true }
-    },
     scene: [
       GameScene
     ]
