@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title></title>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #fullscreen {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      border: 1px solid yellow;
+      padding: 10px;
+      text-align: center;
+      color: yellow;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="phaser-container"></div>
+
+  <script type="text/javascript" src="js/libs/phaser.min.js"></script>
+  <script type="text/javascript" src="js/libs/utils.js"></script>
+  <!-- SCENES -->
+  <script type="text/javascript" src="js/scenes/base_scene.js"></script>
+  <script type="text/javascript" src="js/scenes/game_scene.js"></script>
+  <!-- GAME OBJECTS -->
+  <script type="text/javascript" src="js/game_objects/building.js"></script>
+  <script type="text/javascript" src="js/game_objects/player.js"></script>
+  <script type="text/javascript" src="js/game_objects/pole.js"></script>
+  <!-- INIT -->
+  <script type="text/javascript" src="js/init.js"></script>
+</body>
+</html>
