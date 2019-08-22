@@ -54,7 +54,7 @@ class GameScene extends BaseScene {
     this.score_text = this.add.text(bbox.center_x, 20, 'Score: 0', { color: '#00ff00' });
     this.score_text.setOrigin(0.5, 0);
 
-    this.instruction_text = this.add.text(bbox.center_x, bbox.center_y, 'TAP AND HOLD', { color: '#CCC' });
+    this.instruction_text = this.add.text(bbox.center_x, bbox.center_y, 'TAP AND HOLD', { color: '#CCC', fontSize: "20px" });
     this.instruction_text.setOrigin(0.5, 0);
 
     // START BUILDING
@@ -184,7 +184,9 @@ class GameScene extends BaseScene {
       this.pole.release();
       this.start_building.moveTo(-this.start_building.displayWidth);
       this.target_building.moveTo(0);
-      this.player.moveTo(Math.abs(this.target_building.x - this.player.x), true, function() {
+
+      var player_target_x = Math.round(this.target_building.width / 2 - this.player.width / 2);
+      this.player.moveTo(player_target_x, true, function() {
         var start_building_before = self.start_building;
         self.start_building = self.target_building;
 
@@ -194,6 +196,7 @@ class GameScene extends BaseScene {
         self.revivePole();
       });
     }
+
     this.updateScore();
   }
 
