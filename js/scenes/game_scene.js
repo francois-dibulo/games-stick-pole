@@ -9,6 +9,7 @@ class GameScene extends BaseScene {
     this.start_building = null;
     this.target_building = null;
     this.score_text = null;
+    this.fall_text = null;
     this.score = {
       current: 0,
       max: 0
@@ -22,7 +23,8 @@ class GameScene extends BaseScene {
       },
       Pole: {
         Height: 5,
-        Width: 3
+        Width: 3,
+        Color: 0x8d6924
       },
       Player: {
         Height: 44,
@@ -90,6 +92,8 @@ class GameScene extends BaseScene {
     var bbox = this.getBBox();
     var config = this.Config;
 
+    this.fall_text.destroy();
+
     // START BUILDING
     var building_h = config.Building.Height;
     var building_w = 60;
@@ -136,7 +140,7 @@ class GameScene extends BaseScene {
     var w = this.Config.Pole.Width;
     var h = this.Config.Pole.Height;
     var pole = new PoleRectangle(this, x, y, w, h);
-    pole.revive(x, y, w, h, 0xFF0000);
+    pole.revive(x, y, w, h, this.Config.Pole.Color);
     return pole;
   }
 
@@ -182,6 +186,8 @@ class GameScene extends BaseScene {
 
       this.score.max = Math.max(this.score.current, this.score.max);
       this.player.fallDown(this.getBBox().bottom + this.player.displayHeight);
+
+      this.fall_text = this.add.text(this.player.x + this.player.width - 15, this.player.y - 30, 'OH NO!', { color: '#CCC', fontSize: "20px" });;
 
     // Player is on a platform
     } else {
