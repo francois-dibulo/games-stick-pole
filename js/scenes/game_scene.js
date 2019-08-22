@@ -1,4 +1,7 @@
 // https://audiojungle.net/item/for-synth-pop-pack/24336877
+// https://audiojungle.net/item/this-is-synth-pop/23553449
+// https://audiojungle.net/item/8bit-arcade-video-game/21399859
+// https://audiojungle.net/item/retro-game-8-bit-music/17549637
 class GameScene extends BaseScene {
 
   constructor() {
@@ -35,10 +38,12 @@ class GameScene extends BaseScene {
   }
 
   preload() {
-    this.load.image('player', 'assets/images/player.png');
-    this.load.image('player_fall', 'assets/images/player_fall.png');
+    // this.load.image('player', 'assets/images/player.png');
+    // this.load.image('player_fall', 'assets/images/player_fall.png');
     this.load.image('croco', 'assets/images/croco.png');
     this.load.image('croco_attack', 'assets/images/croco_attack.png');
+    this.load.image('player', 'assets/images/princess.png');
+    this.load.image('player_fall', 'assets/images/princess_fall.png');
   }
 
   // =====================================================================================
