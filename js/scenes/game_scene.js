@@ -23,12 +23,17 @@ class GameScene extends BaseScene {
       Pole: {
         Height: 5,
         Width: 3
+      },
+      Player: {
+        Height: 44,
+        Width: 20
       }
     }
   }
 
   preload() {
-    // this.load.image('unit', 'assets/images/agent_0.png');
+    this.load.image('player', 'assets/images/player.png');
+    this.load.image('player_fall', 'assets/images/player_fall.png');
   }
 
   // =====================================================================================
@@ -118,8 +123,9 @@ class GameScene extends BaseScene {
   }
 
   createPlayer(x, y) {
-    var h = 20;
-    var w = 10;
+    var config = this.Config.Player;
+    var h = config.Height;
+    var w = config.Width;
     y = y - h;
     var player = new PlayerRectangle(this, x, y, w, h);
     player.revive(x, y, w, h, 0x00FF00);

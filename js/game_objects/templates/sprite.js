@@ -1,4 +1,4 @@
-class TemplateSprite extends Phaser.Physics.Matter.Sprite {
+class TemplateSprite extends Phaser.GameObjects. Sprite {
 
   constructor(scene, x, y) {
     super(scene, x, y);
