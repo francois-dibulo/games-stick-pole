@@ -42,6 +42,7 @@ class CrocoSprite extends Phaser.GameObjects. Sprite {
   }
 
   attack(x) {
+    this.setTexture("croco_attack");
     if (x > this.x) {
       this.setScale(-1, 1);
       this.angle = 0;
@@ -49,10 +50,11 @@ class CrocoSprite extends Phaser.GameObjects. Sprite {
       this.setScale(1, 1);
       this.angle = 45;
     }
-    this.moveTo(x, true, null, 1000);
+    this.moveTo(x, true, null, 700);
   }
 
   revive(x, y, w, h, color) {
+    this.setTexture("croco");
     this.setScale(1, 1);
     this.angle = 45;
     //this.setPosition(x, y);

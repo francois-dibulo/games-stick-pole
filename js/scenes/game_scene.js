@@ -38,6 +38,7 @@ class GameScene extends BaseScene {
     this.load.image('player', 'assets/images/player.png');
     this.load.image('player_fall', 'assets/images/player_fall.png');
     this.load.image('croco', 'assets/images/croco.png');
+    this.load.image('croco_attack', 'assets/images/croco_attack.png');
   }
 
   // =====================================================================================
