@@ -6,6 +6,7 @@ class GameScene extends BaseScene {
     this.group_buildings = null;
     this.player = null;
     this.pole = null;
+    this.croco = null;
     this.start_building = null;
     this.target_building = null;
     this.score_text = null;
@@ -36,6 +37,7 @@ class GameScene extends BaseScene {
   preload() {
     this.load.image('player', 'assets/images/player.png');
     this.load.image('player_fall', 'assets/images/player_fall.png');
+    this.load.image('croco', 'assets/images/croco.png');
   }
 
   // =====================================================================================
@@ -55,6 +57,7 @@ class GameScene extends BaseScene {
   }
 
   createEntities() {
+    var self = this;
     var bbox = this.getBBox();
     var config = this.Config;
 
@@ -80,12 +83,19 @@ class GameScene extends BaseScene {
 
     this.player = this.createPlayer(building_center_x, building_y);
     this.player.on("ON_PLAYER_MOVED", this.onPlayerMoved.bind(this))
-    this.player.on("ON_PLAYER_FALLED", this.resetGame.bind(this))
+    this.player.on("ON_PLAYER_FALLED", function() {
+      self.time.delayedCall(800, function() {
+        self.resetGame();
+      }, [], this);
+    });
 
     // POLE
     this.pole = this.createPole(this.player.x + this.player.width + this.Config.Pole.Width, building_y);
     this.pole.setMaxHeight(config.Building.Max_Gap + config.Building.Width[1] + this.Config.Pole.Width);
     this.pole.on("ON_POLE_LAYING", this.onPoleLaying.bind(this));
+
+    // Croco
+    this.spawnCroco();
   }
 
   resetGame() {
@@ -111,6 +121,8 @@ class GameScene extends BaseScene {
 
     // POLE
     this.revivePole();
+
+    this.spawnCroco();
 
     this.score.current = 0;
     this.updateScore();
@@ -142,6 +154,21 @@ class GameScene extends BaseScene {
     var pole = new PoleRectangle(this, x, y, w, h);
     pole.revive(x, y, w, h, this.Config.Pole.Color);
     return pole;
+  }
+
+  spawnCroco() {
+    var bbox = this.getBBox();
+    var offset = 24;
+    var left = this.start_building.x + this.start_building.width + offset;
+    var right = this.target_building.x - offset;
+    var x = (left + right) / 2;
+
+    if (!this.croco) {
+      this.croco = new CrocoSprite(this, x, bbox.bottom - 10);
+    } else {
+      this.croco.revive();
+      this.croco.moveTo(x, true);
+    }
   }
 
   // =====================================================================================
@@ -188,6 +215,7 @@ class GameScene extends BaseScene {
       this.player.fallDown(this.getBBox().bottom + this.player.displayHeight);
 
       this.fall_text = this.add.text(this.player.x + this.player.width - 15, this.player.y - 30, 'OH NO!', { color: '#CCC', fontSize: "20px" });;
+      this.croco.attack(this.player.x);
 
     // Player is on a platform
     } else {
@@ -206,6 +234,7 @@ class GameScene extends BaseScene {
 
         self.target_building = self.getTargetBuilding();
         self.revivePole();
+        self.spawnCroco();
       });
     }
 
