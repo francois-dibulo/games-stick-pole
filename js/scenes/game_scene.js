@@ -47,7 +47,7 @@ class GameScene extends BaseScene {
     this.load.image('princess_fall', 'assets/images/princess_fall.png');
 
     // OhOh https://audiojungle.net/item/funny-creature-oh-oh/21153123
-    this.load.audio('oh_oh', ['assets/sounds/oh_oh.mp3']);
+    // this.load.audio('oh_oh', ['assets/sounds/oh_oh.mp3']);
   }
 
   // =====================================================================================
@@ -224,8 +224,8 @@ class GameScene extends BaseScene {
       this.score.max = Math.max(this.score.current, this.score.max);
       this.player.fallDown(this.getBBox().bottom + this.player.displayHeight);
 
-      var sound_ohoh = this.sound.add('oh_oh');
-      sound_ohoh.play();
+      // var sound_ohoh = this.sound.add('oh_oh');
+      // sound_ohoh.play();
       this.fall_text = this.add.text(this.player.x + this.player.width - 15, this.player.y - 30, 'OH NO!', { color: '#CCC', fontSize: "20px" });;
       this.croco.attack(this.player.x);
 
