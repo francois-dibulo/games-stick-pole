@@ -7,6 +7,7 @@ function initGame() {
     parent: 'phaser-container',
     backgroundColor: '#111111',
     scene: [
+      CharacterSelectionScene,
       GameScene
     ]
   };

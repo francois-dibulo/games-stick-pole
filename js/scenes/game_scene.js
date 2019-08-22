@@ -39,12 +39,12 @@ class GameScene extends BaseScene {
   }
 
   preload() {
-    // this.load.image('player', 'assets/images/player.png');
-    // this.load.image('player_fall', 'assets/images/player_fall.png');
+    this.load.image('player', 'assets/images/player.png');
+    this.load.image('player_fall', 'assets/images/player_fall.png');
     this.load.image('croco', 'assets/images/croco.png');
     this.load.image('croco_attack', 'assets/images/croco_attack.png');
-    this.load.image('player', 'assets/images/princess.png');
-    this.load.image('player_fall', 'assets/images/princess_fall.png');
+    this.load.image('princess', 'assets/images/princess.png');
+    this.load.image('princess_fall', 'assets/images/princess_fall.png');
 
     // OhOh https://audiojungle.net/item/funny-creature-oh-oh/21153123
     this.load.audio('oh_oh', ['assets/sounds/oh_oh.mp3']);
@@ -54,7 +54,7 @@ class GameScene extends BaseScene {
   // CREATE
   // =====================================================================================
 
-  create() {
+  create(opts) {
     this.input.on("pointerdown", this.onPointerDown, this);
     this.input.on("pointerup", this.onPointerUp, this);
 
@@ -63,10 +63,10 @@ class GameScene extends BaseScene {
       maxSize: 10
     });
 
-    this.createEntities();
+    this.createEntities(opts);
   }
 
-  createEntities() {
+  createEntities(opts) {
     var self = this;
     var bbox = this.getBBox();
     var config = this.Config;
@@ -91,7 +91,7 @@ class GameScene extends BaseScene {
     var building_y = this.start_building.y;
     var building_center_x = this.start_building.getCenter().x;
 
-    this.player = this.createPlayer(building_center_x, building_y);
+    this.player = this.createPlayer(building_center_x, building_y, opts.player_texture);
     this.player.on("ON_PLAYER_MOVED", this.onPlayerMoved.bind(this))
     this.player.on("ON_PLAYER_FALLED", function() {
       self.time.delayedCall(800, function() {
@@ -148,12 +148,12 @@ class GameScene extends BaseScene {
     return building;
   }
 
-  createPlayer(x, y) {
+  createPlayer(x, y, texture) {
     var config = this.Config.Player;
     var h = config.Height;
     var w = config.Width;
     y = y - h;
-    var player = new PlayerRectangle(this, x, y, w, h);
+    var player = new PlayerRectangle(this, x, y, texture);
     player.revive(x, y, w, h, 0x00FF00);
     return player;
   }

@@ -1,7 +1,8 @@
 class PlayerRectangle extends Phaser.GameObjects. Sprite {
 
   constructor(scene, x, y, texture) {
-    super(scene, x, y, "player");
+    super(scene, x, y, texture || "player");
+    this.inital_texture = texture || "player";
     this._id = randomId();
     this.setOrigin(0, 0);
     scene.add.existing(this);
@@ -41,7 +42,7 @@ class PlayerRectangle extends Phaser.GameObjects. Sprite {
   }
 
   fallDown(y) {
-    this.setTexture("player_fall");
+    this.setTexture(this.inital_texture + "_fall");
 
     this.fall_tween = this.scene.tweens.add({
       targets: [this],
@@ -58,7 +59,7 @@ class PlayerRectangle extends Phaser.GameObjects. Sprite {
 
   // For object pools:
   revive(x, y, w, h, color) {
-    this.setTexture("player");
+    this.setTexture(this.inital_texture);
     if (this.move_tween) {
       this.move_tween.stop();
       this.move_tween = null;
