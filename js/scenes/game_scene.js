@@ -60,7 +60,7 @@ class GameScene extends BaseScene {
 
     this.group_buildings = this.add.group({
       classType: BuildingRectangle,
-      maxSize: 10
+      maxSize: 4
     });
 
     this.createEntities(opts);
@@ -214,43 +214,49 @@ class GameScene extends BaseScene {
   }
 
   onPlayerMoved() {
-    var self = this;
+    // Player missed the platform
     var player_center_x = this.player.getCenter().x;
-
-    // Player is not on a platform
     if (player_center_x + 2 < this.target_building.x ||
         player_center_x - 2 > this.target_building.x + this.target_building.displayWidth) {
-
-      this.score.max = Math.max(this.score.current, this.score.max);
-      this.player.fallDown(this.getBBox().bottom + this.player.displayHeight);
-
-      // var sound_ohoh = this.sound.add('oh_oh');
-      // sound_ohoh.play();
-      this.fall_text = this.add.text(this.player.x + this.player.width - 15, this.player.y - 30, 'OH NO!', { color: '#CCC', fontSize: "20px" });;
-      this.croco.attack(this.player.x);
+      this.onPlayerDie();
 
     // Player is on a platform
     } else {
-      this.score.current += 1;
-
-      this.pole.release();
-      this.start_building.moveTo(-this.start_building.displayWidth);
-      this.target_building.moveTo(0);
-
-      var player_target_x = Math.round(this.target_building.width / 2 - this.player.width / 2);
-      this.player.moveTo(player_target_x, true, function() {
-        var start_building_before = self.start_building;
-        self.start_building = self.target_building;
-
-        start_building_before.release();
-
-        self.target_building = self.getTargetBuilding();
-        self.revivePole();
-        self.spawnCroco();
-      });
+      this.onPlayerNextPlatform();
     }
 
     this.updateScore();
+  }
+
+  onPlayerDie() {
+    this.score.max = Math.max(this.score.current, this.score.max);
+    this.player.fallDown(this.getBBox().bottom + this.player.displayHeight);
+
+    // var sound_ohoh = this.sound.add('oh_oh');
+    // sound_ohoh.play();
+    this.fall_text = this.add.text(this.player.x + this.player.width - 15, this.player.y - 30, 'OH NO!', { color: '#CCC', fontSize: "20px" });;
+    this.croco.attack(this.player.x);
+  }
+
+  onPlayerNextPlatform() {
+    var self = this;
+    this.score.current += 1;
+
+    this.pole.release();
+    this.start_building.moveTo(-this.start_building.displayWidth);
+    this.target_building.moveTo(0);
+
+    var player_target_x = Math.round(this.target_building.width / 2 - this.player.width / 2);
+    this.player.moveTo(player_target_x, true, function() {
+      var start_building_before = self.start_building;
+      self.start_building = self.target_building;
+
+      start_building_before.release();
+
+      self.target_building = self.getTargetBuilding();
+      self.revivePole();
+      self.spawnCroco();
+    });
   }
 
   updateScore() {
